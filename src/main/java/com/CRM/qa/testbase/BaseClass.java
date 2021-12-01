@@ -1,5 +1,6 @@
 package com.CRM.qa.testbase;
 
+import com.CRM.qa.pages.LoginPage;
 import com.CRM.qa.utility.CurrentDate;
 import com.CRM.qa.utility.PropertyReader;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -25,12 +26,13 @@ public class BaseClass {
     protected static String currentdate = CurrentDate.currentDate();
     protected BaseClass baseclass;
 
+    public LoginPage loginpage;
+
 
     // Method to initialize browser (local or remote)
     public static void browserInitialization() throws MalformedURLException {
 
         String browser = PropertyReader.getProp("browser");
-        String url = PropertyReader.getProp("url");
         String grid = PropertyReader.getProp("grid");
         String gridUrl = PropertyReader.getProp("grid_url");
         if (browser.equalsIgnoreCase("chrome")) {
@@ -64,10 +66,16 @@ public class BaseClass {
         js = (JavascriptExecutor)driver;
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        //eventHandlerInit();
+
+
+    }
+
+    // Method to Launch URL
+    public static void launchURL()
+    {
+        String url = PropertyReader.getProp("url");
         driver.get(url);
         driver.manage().deleteAllCookies();
-
     }
 
     // This Method Close all instances created by WebDriver

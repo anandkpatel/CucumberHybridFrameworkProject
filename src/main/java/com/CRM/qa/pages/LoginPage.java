@@ -32,17 +32,36 @@ public class LoginPage extends BaseClass
 	{
 		PageFactory.initElements(driver, this);
 	}
-	
-	// Method to Login into account
-	public PartiesPage login()
+
+	// Method to return login page title to verify after launching url we land on login page
+	public String loginPageTitle()
+	{
+		return driver.getTitle();
+	}
+
+	public void clickOnLoginBtn()
 	{
 		login.click();
+	}
+
+	public void enterDomainName()
+	{
 		cp_account.sendKeys(PropertyReader.getProp("domain_name"));
+	}
+	
+	// Method to Login into account
+	public  HomePage login(String uname, String pwd)
+	{
 		go_to_login.click();
-		username.sendKeys(PropertyReader.getProp("username"));
-		password.sendKeys(PropertyReader.getProp("password"));
+		username.sendKeys(uname);
+		password.sendKeys(pwd);
 		submit.click();
-		return new PartiesPage();
+		return new HomePage();
+	}
+
+	public String homePageTitle()
+	{
+		return driver.getTitle();
 	}
 	
 	
