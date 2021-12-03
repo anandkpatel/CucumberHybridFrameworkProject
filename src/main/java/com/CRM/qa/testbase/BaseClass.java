@@ -1,5 +1,7 @@
 package com.CRM.qa.testbase;
 
+
+import com.CRM.qa.pages.HomePage;
 import com.CRM.qa.pages.LoginPage;
 import com.CRM.qa.utility.CurrentDate;
 import com.CRM.qa.utility.PropertyReader;
@@ -11,9 +13,12 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
@@ -26,13 +31,23 @@ public class BaseClass {
     protected static String currentdate = CurrentDate.currentDate();
     protected BaseClass baseclass;
 
-    public LoginPage loginpage;
+    public static Actions myAction;
+
+    //Pages
+    protected LoginPage loginpage;
 
 
-    // Method to initialize browser (local or remote)
+
+
+    static File folder;
+
+
+
+
     public static void browserInitialization() throws MalformedURLException {
 
         String browser = PropertyReader.getProp("browser");
+        String url = PropertyReader.getProp("url");
         String grid = PropertyReader.getProp("grid");
         String gridUrl = PropertyReader.getProp("grid_url");
         if (browser.equalsIgnoreCase("chrome")) {
@@ -67,24 +82,17 @@ public class BaseClass {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
-
-    }
-
-    // Method to Launch URL
-    public static void launchURL()
-    {
-        String url = PropertyReader.getProp("url");
         driver.get(url);
         driver.manage().deleteAllCookies();
+
     }
+
 
     // This Method Close all instances created by WebDriver
     public static void close() {
         driver.quit();
 
     }
-
-
 
 
 }

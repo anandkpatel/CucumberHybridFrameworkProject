@@ -5,8 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * This Class and Method is used to read property from config.properties file
+ */
 public class PropertyReader {
-    static Properties prop;
+    private static Properties prop;
     static String value;
 
     public static String getProp(String propName) {

@@ -1,14 +1,15 @@
 package com.CRM.qa.pages;
 
-import com.CRM.qa.testbase.BaseClass;
+
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 
-public class HomePage extends BaseClass {
+public class HomePage {
 
-	
+	private WebDriver driver;
 	@FindBy(xpath = "//a[@aria-label='People & Organisations']")
 	WebElement peoplebtn;
 	
@@ -31,11 +32,10 @@ public class HomePage extends BaseClass {
 	}
 	
 	// Method to navigate to account setting page
-	public AccountSettingPage goToAccountSettingPage()
+	public void goToAccountSettingPage()
 	{
 		accountbtn.click();
 		accountsettingBtn.click();
-		return new AccountSettingPage();
 		
 	}
 	
