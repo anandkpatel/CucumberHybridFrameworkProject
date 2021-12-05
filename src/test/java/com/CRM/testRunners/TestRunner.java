@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = "C://Users//Anand//IdeaProjects//CucumberFrameworkProject//src//main//java//com//CRM//qa//features//LoginPage.feature",
+        features = "C://Users//Anand//IdeaProjects//CucumberFrameworkProject//src//main//java//com//CRM//qa//features",
         glue = {"com\\CRM\\stepDefinations", "com\\CRM\\AppHooks" },
         dryRun = false,
         monochrome = true,
