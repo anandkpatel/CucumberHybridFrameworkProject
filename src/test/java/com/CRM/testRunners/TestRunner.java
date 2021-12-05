@@ -9,8 +9,10 @@ import org.junit.runner.RunWith;
         features = "C://Users//Anand//IdeaProjects//CucumberFrameworkProject//src//main//java//com//CRM//qa//features//LoginPage.feature",
         glue = {"com\\CRM\\stepDefinations", "com\\CRM\\AppHooks" },
         dryRun = false,
-        plugin = {"progress"},
-        monochrome = true
+        monochrome = true,
+        plugin = {"pretty",
+                "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
+                "timeline:test-output-thread/"}
 
 )
 

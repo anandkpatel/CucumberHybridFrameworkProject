@@ -2,6 +2,7 @@ package com.CRM.qa.pages;
 
 
 import com.CRM.qa.utility.PropertyReader;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,57 +14,45 @@ public class LoginPage
 {
 	private WebDriver driver;
 
-	@FindBy(name = "login:usernameDecorate:username")
-	WebElement username;
+	// 1. By Locators: OR
+	private By emailId = By.id("email");
+	private By password = By.id("passwd");
+	private By signInButton = By.id("SubmitLogin");
+	private By forgotPwdLink = By.linkText("Forgot your password?");
 
-	//private By username = By.name("login:usernameDecorate:username");
-	private By password = By.id("login:passwordDecorate:password");
-	private By submit = By.id("login:login");
-	private By login = By.xpath( "//a[normalize-space()='Log in']");
-	private By cp_account = By.id("login-subdomain");
-	private By go_to_login = By.id("login-button");
-
-	
-	// Constructor to initialize Web elements
-	public LoginPage(WebDriver driver)
-	{
+	// 2. Constructor of the page class:
+	public LoginPage(WebDriver driver) {
 		this.driver = driver;
-		PageFactory.initElements(driver, this);
-
 	}
 
-	// Method to return login page title to verify after launching url we land on login page
-	public String loginPageTitle()
-	{
+	// 3. page actions: features(behavior) of the page the form of methods:
+
+	public String getLoginPageTitle() {
 		return driver.getTitle();
 	}
 
-	public void clickOnLoginBtn()
-	{
-		driver.findElement(login).click();
+	public boolean isForgotPwdLinkExist() {
+		return driver.findElement(forgotPwdLink).isDisplayed();
 	}
 
-	public void enterDomainName()
-	{
-		driver.findElement(cp_account).sendKeys(PropertyReader.getProp("domain_name"));
+	public void enterUserName(String username) {
+		driver.findElement(emailId).sendKeys(username);
 	}
-	
-	// Method to Login into account
-	public  HomePage login(String uname, String pwd)
-	{
-		driver.findElement(go_to_login).click();
-		//driver.findElement(username).sendKeys(uname);
-		username.sendKeys(uname);
+
+	public void enterPassword(String pwd) {
 		driver.findElement(password).sendKeys(pwd);
-		driver.findElement(submit).click();
-		return new HomePage();
 	}
 
-	public String homePageTitle()
-	{
-		return driver.getTitle();
+	public void clickOnLogin() {
+		driver.findElement(signInButton).click();
 	}
-	
-	
-	
+
+	public AccountPage doLogin(String un, String pwd) {
+		System.out.println("login with: " + un + " and " + pwd);
+		driver.findElement(emailId).sendKeys(un);
+		driver.findElement(password).sendKeys(pwd);
+		driver.findElement(signInButton).click();
+		return new AccountPage(driver);
+	}
+
 }

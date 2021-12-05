@@ -2,8 +2,6 @@ package com.CRM.AppHooks;
 
 import com.CRM.qa.testbase.DriverFactory;
 import com.CRM.qa.utility.PropertyReader;
-import com.CRM.qa.utility.ScreenShotUtils;
-import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
@@ -13,31 +11,36 @@ import org.openqa.selenium.WebDriver;
 
 public class ApplicationHooks {
 
-    private DriverFactory driverfactory;
+    private DriverFactory driverFactory;
     private WebDriver driver;
+    //private ConfigReader configReader;
+    //Properties prop;
+
+
+
 
     @Before(order = 0)
-    public void setUp()
-    {
-        String Browser = PropertyReader.getProp("browser");
-        driverfactory = new DriverFactory();
-        driver = driverfactory.initializeBrowser(Browser);
+    public void launchBrowser() {
+        String browserName = PropertyReader.getProp("browser");
+        driverFactory = new DriverFactory();
+        driver = driverFactory.initializeBrowser(browserName);
+
     }
 
     @After(order = 0)
-    public void quitBrowser()
-    {
+    public void quitBrowser() {
         driver.quit();
     }
 
     @After(order = 1)
-    public void tearDown(Scenario scenario)
-    {
-        if(scenario.isFailed())
-        {
-           // Steps to capture screen shot in cucumber report
-            byte [] path = ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
-            scenario.attach(path, "image/png", scenario.getName().replace(" ", "_"));
+    public void tearDown(Scenario scenario) {
+        if (scenario.isFailed()) {
+            // take screenshot:
+            String screenshotName = scenario.getName().replaceAll(" ", "_");
+            byte[] sourcePath = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+            scenario.attach(sourcePath, "image/png", screenshotName);
+
         }
     }
+
 }

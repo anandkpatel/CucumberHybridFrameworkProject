@@ -1,6 +1,5 @@
 package com.CRM.qa.utility;
 
-import com.CRM.qa.testbase.BaseClass;
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.WebElement;
 
@@ -8,7 +7,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class IteratorUtil extends BaseClass
+public class IteratorUtil
 {
 
     static LinkedList<WebElement> myLinkedList;

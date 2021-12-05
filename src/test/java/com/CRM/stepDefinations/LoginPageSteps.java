@@ -3,41 +3,55 @@ package com.CRM.stepDefinations;
 import com.CRM.qa.pages.LoginPage;
 import com.CRM.qa.testbase.BaseClass;
 import com.CRM.qa.testbase.DriverFactory;
+import io.cucumber.datatable.DataTable;
 import org.junit.Assert;
 import io.cucumber.java.en.*;
 
 import java.net.MalformedURLException;
+import java.util.List;
 
 public class LoginPageSteps {
 
 
-   LoginPage lg = new LoginPage(DriverFactory.getDriver());
+    private static String title;
+    private LoginPage loginPage = new LoginPage(DriverFactory.getDriver());
 
-    @Then("User should be on Login page")
-    public void user_should_be_on_login_page() {
-        DriverFactory.getDriver().get("https://capsulecrm.com/");
-        Assert.assertEquals("Login Page Title","CRM Made Simple | Capsule", lg.loginPageTitle());
-    }
-    @Then("user click on Login button")
-    public void user_click_on_login_button() {
-        lg.clickOnLoginBtn();
+    @Given("user is on login page")
+    public void user_is_on_login_page() {
+
+        DriverFactory.getDriver()
+                .get("http://automationpractice.com/index.php?controller=authentication&back=my-account");
     }
 
-    @Then("User Enters Domain name {string}")
-    public void user_enters_domain_name(String string) {
-        lg.enterDomainName();
+    @When("user gets the title of the page")
+    public void user_gets_the_title_of_the_page() {
+        title = loginPage.getLoginPageTitle();
+        System.out.println("Page title is: " + title);
     }
 
-    @Then("User enters Username as {string} and Password as {string} and click on Submit button")
-    public void user_enters_username_as_and_password_as_and_click_on_submit_button(String uname, String pwd) {
-        lg.login(uname, pwd);
-
+    @Then("page title should be {string}")
+    public void page_title_should_be(String expectedTitleName) {
+        Assert.assertTrue(title.contains(expectedTitleName));
     }
 
-    @Then("User should be on Home page and title should be {string}")
-    public void user_should_be_on_home_page_and_title_should_be(String string) {
-        System.out.println("Home page Title is --> " + lg.homePageTitle());
-        Assert.assertEquals("Home Page Title", "Dashboard | na CRM1", lg.homePageTitle());
+    @Then("forgot your password link should be displayed")
+    public void forgot_your_password_link_should_be_displayed() {
+        Assert.assertTrue(loginPage.isForgotPwdLinkExist());
+    }
+
+    @When("user enters username {string}")
+    public void user_enters_username(String username) {
+        loginPage.enterUserName(username);
+    }
+
+    @When("user enters password {string}")
+    public void user_enters_password(String password) {
+        loginPage.enterPassword(password);
+    }
+
+    @When("user clicks on Login button")
+    public void user_clicks_on_login_button() {
+        loginPage.clickOnLogin();
     }
 
 
