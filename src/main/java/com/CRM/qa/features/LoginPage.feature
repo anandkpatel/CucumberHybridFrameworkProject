@@ -9,11 +9,16 @@ Feature: Capsule CRM Login functionality
     Given user is on login page
     Then forgot your password link should be displayed
 
-  Scenario: Login with correct credentials
+  Scenario Outline: Login with correct credentials
     Given user is on login page
-    When user enters username "akp98259@gmail.com"
-    And user enters password "akp98259@A"
+    When user enters username "<username>"
+    And user enters password "<password>"
     And user clicks on Login button
     Then user gets the title of the page
     And page title should be "My account - My Store"
+
+    Examples:
+    |username           |password      |
+    |akp98259@gmail.com |akp98259@A    |
+    |test123@gmail.com  |test@123      |
 
